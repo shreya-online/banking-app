@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Getter
@@ -22,7 +23,7 @@ public class Account {
 
     @Column(name = "account_holder_name")
     private String accountHolderName;
-    private double balance;
+    private BigDecimal balance;
 
 //    private String status;
 }
