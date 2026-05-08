@@ -9,6 +9,7 @@ import com.example.banking.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,25 +40,25 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public AccountDto deposit(Long id, double amount) {
+    public AccountDto deposit(Long id, BigDecimal amount) {
         Account account = accountRepository
                 .findById(id)
                 .orElseThrow(() -> new AccountException("Account doesn't exists"));
-        double total = account.getBalance()+ amount;
+        BigDecimal total = account.getBalance().add(amount);
         account.setBalance(total);
         Account savedAccount = accountRepository.save(account);
         return AccountMapper.maptoAccountDto(savedAccount);
     }
 
     @Override
-    public AccountDto withdraw(Long id, double amount) {
+    public AccountDto withdraw(Long id, BigDecimal amount) {
         Account account = accountRepository
                 .findById(id)
                 .orElseThrow(() -> new AccountException("Account doesn't exist"));
-        if(account.getBalance() < amount){
+        if(account.getBalance().compareTo(amount) < 0){
             throw new RuntimeException("Insufficient balance");
         }
-        double total = account.getBalance() - amount;
+        BigDecimal total = account.getBalance().subtract(amount);
         account.setBalance(total);
         Account savedAccount = accountRepository.save(account);
         return AccountMapper.maptoAccountDto(savedAccount);

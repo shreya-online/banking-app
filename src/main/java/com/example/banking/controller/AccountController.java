@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -36,8 +37,8 @@ public class AccountController {
     //Deposit REST API
     @PutMapping("/{id}/deposit")
     public ResponseEntity<AccountDto> deposit(@PathVariable Long id,
-                                              @RequestBody Map<String, Double> request){
-        Double amount = request.get("amount");
+                                              @RequestBody Map<String, BigDecimal> request){
+        BigDecimal amount = request.get("amount");
         AccountDto accountDto = accountService.deposit(id, amount);
         return ResponseEntity.ok(accountDto);
     }
@@ -45,8 +46,8 @@ public class AccountController {
 //    Withdraw REST Api
     @PutMapping("/{id}/withdraw")
     public ResponseEntity<AccountDto> withdraw(@PathVariable Long id,
-                                               @RequestBody Map<String, Double> request){
-         Double amount = request.get("amount");
+                                               @RequestBody Map<String, BigDecimal> request){
+         BigDecimal amount = request.get("amount");
          AccountDto accountDto = accountService.withdraw(id, amount);
          return ResponseEntity.ok(accountDto);
     }

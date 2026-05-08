@@ -3,6 +3,7 @@ package com.example.banking.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 //@Data
@@ -15,5 +16,5 @@ import java.util.Date;
 
 public record AccountDto(Long id,
                          String accountHolderName,
-                         double balance) {
+                         BigDecimal balance) {
 }
