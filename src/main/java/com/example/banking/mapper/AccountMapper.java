@@ -11,14 +11,18 @@ public class AccountMapper {
 //                accountdto.getId(), accountdto.getAccountHolderName(), accountdto.getBalance()
 //        );
         Account account = new Account(
-                accountdto.id(), accountdto.accountHolderName() , accountdto.balance()
+                accountdto.id(), accountdto.accountNumber(), accountdto.user(),
+                accountdto.balance(), accountdto.accountType(), accountdto.accountStatus(),
+                accountdto.version(), accountdto.createdAt(), accountdto.updatedAt()
         );
         return account;
     }
 
     public static AccountDto maptoAccountDto(Account account){
         AccountDto accountDto = new AccountDto(
-                account.getId(), account.getAccountHolderName(), account.getBalance()
+                account.getId(), account.getAccountNumber(), account.getUser(),
+                account.getBalance(), account.getAccountType(), account.getAccountStatus(),
+                account.getVersion(), account.getCreatedAt(), account.getUpdatedAt()
         );
         return accountDto;
     }
