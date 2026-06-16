@@ -1,5 +1,6 @@
 package com.example.banking.entity;
 
+import com.example.banking.entity.enums.AuditAction;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

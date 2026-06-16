@@ -1,4 +1,4 @@
-package com.example.banking.entity;
+package com.example.banking.entity.enums;
 
 public enum AuditAction {
     LOGIN,

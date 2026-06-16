@@ -1,14 +1,11 @@
 package com.example.banking.dto;
 
-import com.example.banking.entity.AccountStatus;
-import com.example.banking.entity.AccountType;
+import com.example.banking.entity.enums.AccountStatus;
+import com.example.banking.entity.enums.AccountType;
 import com.example.banking.entity.User;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 //@Data
 //@AllArgsConstructor
