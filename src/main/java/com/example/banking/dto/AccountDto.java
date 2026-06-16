@@ -27,5 +27,5 @@ public record AccountDto(Long id,
                          Long version,
                          LocalDateTime createdAt,
                          LocalDateTime updatedAt
-                         ) {
+) {
 }
