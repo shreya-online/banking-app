@@ -1,10 +1,11 @@
 package com.example.banking.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import com.example.banking.entity.enums.AccountStatus;
+import com.example.banking.entity.enums.AccountType;
+import com.example.banking.entity.User;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 //@Data
 //@AllArgsConstructor
@@ -15,6 +16,13 @@ import java.util.Date;
 //}
 
 public record AccountDto(Long id,
-                         String accountHolderName,
-                         BigDecimal balance) {
+                         String accountNumber,
+                         User user,
+                         BigDecimal balance,
+                         AccountType accountType,
+                         AccountStatus accountStatus,
+                         Long version,
+                         LocalDateTime createdAt,
+                         LocalDateTime updatedAt
+) {
 }
