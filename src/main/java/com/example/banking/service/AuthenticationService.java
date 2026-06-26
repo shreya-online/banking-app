@@ -1,8 +1,9 @@
 package com.example.banking.service;
 
 import com.example.banking.dto.request.LoginRequest;
+import com.example.banking.dto.response.LoginResponse;
 
 public interface AuthenticationService {
 
-    void login(LoginRequest loginRequest);
+    LoginResponse login(LoginRequest loginRequest);
 }
