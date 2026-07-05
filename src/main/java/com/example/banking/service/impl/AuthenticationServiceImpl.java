@@ -42,7 +42,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 //  Even though authentication already verified the user, the repository still returns an Optional
 //  orElseThrow() safely handles the unlikely case that the user no longer exists.
         User user = userRepository.findByUsername(loginRequest.username())
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));  //another database query.
 
         UserDetails userDetails = new CustomUserDetails(user);
         String token = jwtService.generateToken(userDetails);
@@ -53,6 +53,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                                 JwtService.JWT_EXPIRATION,
                                 user.getFullName());
     }
+//authentication.getPrincipal() returns the same CustomUserDetails object that CustomUserDetailsService created earlier.No new DB query is needed
+//        Authentication authentication = authenticationManager.authenticate(
+//                new UsernamePasswordAuthenticationToken(
+//                        loginRequest.username(),
+//                        loginRequest.password()));
+//        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+//        User user = userDetails.getUser();
+//        String token = jwtService.generateToken(userDetails);
 
 
 }

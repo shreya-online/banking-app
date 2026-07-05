@@ -5,6 +5,7 @@ import com.example.banking.dto.AccountDto;
 import com.example.banking.service.AccountService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -64,6 +65,12 @@ public class AccountController {
     public  ResponseEntity<String> delete(@PathVariable Long id){
         accountService.deleteAccount(id);
         return ResponseEntity.ok("Account Deleted Successfully");
+    }
+
+    //Added a protected controller to verify JwtAuthenticationFilter is actually reading the JWT, validating it, & authenticating the user
+    @GetMapping("/test")
+    public String test(Authentication authentication) {
+        return "Hello " + authentication.getName();
     }
 
 }
