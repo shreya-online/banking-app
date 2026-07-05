@@ -50,7 +50,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         return new LoginResponse(token,
                                 user.getUsername(),
                                 user.getRole(),
-                                JwtService.JWT_EXPIRATION,
+                                jwtService.getJwtExpiration(),
                                 user.getFullName());
     }
 //authentication.getPrincipal() returns the same CustomUserDetails object that CustomUserDetailsService created earlier.No new DB query is needed
