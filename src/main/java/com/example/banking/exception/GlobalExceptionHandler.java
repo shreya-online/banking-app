@@ -49,4 +49,16 @@ public class GlobalExceptionHandler {
         );
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorDetails);
     }
+
+    @ExceptionHandler(UserAlreadyExistsException.class)     //409
+    public ResponseEntity<ErrorDetails> handleUserAlreadyExists(UserAlreadyExistsException exception,
+                                                                WebRequest webRequest){
+        ErrorDetails errorDetails = new ErrorDetails(
+                LocalDateTime.now(),
+                exception.getMessage(),
+                webRequest.getDescription(false),
+                "USER_ALREADY_EXISTS"
+        );
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(errorDetails);
+    }
 }

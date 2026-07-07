@@ -1,10 +1,13 @@
 package com.example.banking.controller;
 
 import com.example.banking.dto.request.LoginRequest;
+import com.example.banking.dto.request.RegisterRequest;
 import com.example.banking.dto.response.LoginResponse;
+import com.example.banking.dto.response.RegisterResponse;
 import com.example.banking.service.AuthenticationService;
 import com.example.banking.service.impl.AuthenticationServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,5 +29,11 @@ private final AuthenticationService authenticationService;
     public ResponseEntity<LoginResponse> loginUser(@RequestBody LoginRequest loginRequest){
         LoginResponse loginResponse = authenticationService.login(loginRequest);
         return ResponseEntity.ok(loginResponse);
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<RegisterResponse> registerUser(@RequestBody RegisterRequest registerRequest){
+        RegisterResponse registerResponse = authenticationService.register(registerRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(registerResponse) ;   //gives 201
     }
 }

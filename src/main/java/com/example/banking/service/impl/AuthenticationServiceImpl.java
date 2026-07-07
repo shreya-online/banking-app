@@ -1,8 +1,11 @@
 package com.example.banking.service.impl;
 
 import com.example.banking.dto.request.LoginRequest;
+import com.example.banking.dto.request.RegisterRequest;
 import com.example.banking.dto.response.LoginResponse;
+import com.example.banking.dto.response.RegisterResponse;
 import com.example.banking.entity.User;
+import com.example.banking.exception.UserAlreadyExistsException;
 import com.example.banking.repository.UserRepository;
 import com.example.banking.security.CustomUserDetails;
 import com.example.banking.security.JwtService;
@@ -62,5 +65,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 //        User user = userDetails.getUser();
 //        String token = jwtService.generateToken(userDetails);
 
+    @Override
+    public RegisterResponse register(RegisterRequest registerRequest) {
+        if(userRepository.existsByUsername(registerRequest.username())){
+            throw new UserAlreadyExistsException("Username already exists");
+        }
+        return null;
+    }
 
 }
