@@ -2,7 +2,7 @@ package com.example.banking.controller;
 
 
 import com.example.banking.dto.AccountDto;
-import com.example.banking.service.AccountService;
+import com.example.banking.service.AccountServiceOld;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -14,11 +14,11 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("api/accounts")
-public class AccountController {
+public class AccountControllerOld {
 
-    private AccountService accountService;
+    private AccountServiceOld accountService;
 
-    public AccountController(AccountService accountService) {
+    public AccountControllerOld(AccountServiceOld accountService) {
         this.accountService = accountService;
     }
 

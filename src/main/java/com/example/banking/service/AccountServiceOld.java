@@ -5,7 +5,7 @@ import com.example.banking.dto.AccountDto;
 import java.math.BigDecimal;
 import java.util.List;
 
-public interface AccountService {
+public interface AccountServiceOld {
     AccountDto createAccount(AccountDto account);
 
     AccountDto getAccountById(Long id);

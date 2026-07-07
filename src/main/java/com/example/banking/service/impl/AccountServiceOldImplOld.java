@@ -5,7 +5,7 @@ import com.example.banking.entity.Account;
 import com.example.banking.exception.AccountException;
 import com.example.banking.mapper.AccountMapper;
 import com.example.banking.repository.AccountRepository;
-import com.example.banking.service.AccountService;
+import com.example.banking.service.AccountServiceOld;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,13 +14,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class AccountServiceImpl implements AccountService {
+public class AccountServiceOldImplOld implements AccountServiceOld {
 
     private AccountRepository accountRepository;
 
     //Constructor injection
     @Autowired
-    public AccountServiceImpl(AccountRepository accountRepository) {
+    public AccountServiceOldImplOld(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
     }
 
