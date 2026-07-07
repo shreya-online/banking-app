@@ -5,6 +5,7 @@ import com.example.banking.dto.request.RegisterRequest;
 import com.example.banking.dto.response.LoginResponse;
 import com.example.banking.dto.response.RegisterResponse;
 import com.example.banking.entity.User;
+import com.example.banking.entity.enums.Role;
 import com.example.banking.exception.UserAlreadyExistsException;
 import com.example.banking.repository.UserRepository;
 import com.example.banking.security.CustomUserDetails;
@@ -14,6 +15,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,12 +25,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public AuthenticationServiceImpl(AuthenticationManager authenticationManager,JwtService jwtService,
-                                     UserRepository userRepository) {
+    public AuthenticationServiceImpl(AuthenticationManager authenticationManager, JwtService jwtService,
+                                     UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.authenticationManager = authenticationManager;
         this.jwtService = jwtService;
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -70,7 +74,37 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         if(userRepository.existsByUsername(registerRequest.username())){
             throw new UserAlreadyExistsException("Username already exists");
         }
-        return null;
+        User user = new User();
+        if(registerRequest.fullName() == null || registerRequest.fullName().isBlank()){
+            throw new IllegalArgumentException("Fullname is required");
+        }
+        else{
+            user.setFullName(registerRequest.fullName());
+        }
+
+        if(registerRequest.username() == null || registerRequest.username().isBlank()){
+            throw new IllegalArgumentException("Username is required");
+        }
+        else{
+            user.setUsername(registerRequest.username());
+        }
+
+        if(registerRequest.password() == null || registerRequest.password().length()<6){
+            throw new IllegalArgumentException("Password must be at least 6 characters");
+        }
+        else{
+            user.setPassword(passwordEncoder.encode(registerRequest.password()));
+        }
+
+        user.setRole(Role.USER);
+        user.setActive(true);   //Since boolean defaults to false, JPA saves: is_active = 0
+
+        User savedUser = userRepository.save(user);
+        return new RegisterResponse(
+                savedUser.getId(),
+                savedUser.getUsername(),
+                "User registered successfully"
+        );
     }
 
 }

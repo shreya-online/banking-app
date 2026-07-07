@@ -37,6 +37,7 @@ public class User {
 
     @Column(name = "is_active", nullable = false)
     private boolean isActive;
+//    private boolean isActive = true;    This way new users are active by default unless you explicitly disable them
 
     @CreationTimestamp
     @Column(name="user_created_at")
