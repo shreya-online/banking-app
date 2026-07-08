@@ -56,9 +56,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         return new LoginResponse(token,
                                 user.getUsername(),
+                                user.getFullName(),
+                                user.getCustomerId(),
                                 user.getRole(),
-                                jwtService.getJwtExpiration(),
-                                user.getFullName());
+                                jwtService.getJwtExpiration());
     }
 //authentication.getPrincipal() returns the same CustomUserDetails object that CustomUserDetailsService created earlier.No new DB query is needed
 //        Authentication authentication = authenticationManager.authenticate(
@@ -74,6 +75,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         if(userRepository.existsByUsername(registerRequest.username())){
             throw new UserAlreadyExistsException("Username already exists");
         }
+
         User user = new User();
         if(registerRequest.fullName() == null || registerRequest.fullName().isBlank()){
             throw new IllegalArgumentException("Fullname is required");
@@ -96,13 +98,22 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             user.setPassword(passwordEncoder.encode(registerRequest.password()));
         }
 
+        user.setEmail(registerRequest.email());
         user.setRole(Role.USER);
-        user.setActive(true);   //Since boolean defaults to false, JPA saves: is_active = 0
+        user.setActive(true);   //Since boolean defaults to false, JPA saves: is_active = 0, So made it active here
 
         User savedUser = userRepository.save(user);
+        savedUser.setCustomerId(String.format("%07d", savedUser.getId()));
+        savedUser = userRepository.save(user);
+//customerID is a business identifier derived from the generated DB ID. Since the DB ID isn't available until after the 1st
+// insert,I save the user, generate the 7-digit customer ID, and update the record. In a production system, I would likely
+// use a database sequence or a dedicated ID generation strategy to avoid the second save
+
         return new RegisterResponse(
                 savedUser.getId(),
                 savedUser.getUsername(),
+                savedUser.getCustomerId(),
+                savedUser.getEmail(),
                 "User registered successfully"
         );
     }

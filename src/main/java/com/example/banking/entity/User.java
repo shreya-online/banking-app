@@ -35,6 +35,9 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @Column(unique = true, nullable = true)
+    private String customerId;
+
     @Column(name = "is_active", nullable = false)
     private boolean isActive;
 //    private boolean isActive = true;    This way new users are active by default unless you explicitly disable them
@@ -42,6 +45,4 @@ public class User {
     @CreationTimestamp
     @Column(name="user_created_at")
     private LocalDateTime createdAt;
-
-
 }
