@@ -76,6 +76,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             throw new UserAlreadyExistsException("Username already exists");
         }
 
+        if(userRepository.existsByEmail(registerRequest.email())){
+            throw new UserAlreadyExistsException("User email already exists");
+        }
+
         User user = new User();
         if(registerRequest.fullName() == null || registerRequest.fullName().isBlank()){
             throw new IllegalArgumentException("Fullname is required");
